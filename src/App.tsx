@@ -6,13 +6,19 @@ import Joke from "./components/Joke";
 const App = () => {
     const [jokeData, setJokeData] = useState<any[]>([]);
 
+    const fetchAndStoreJokes = async () => {
+        const httpResponse = await axios.get("https://jokes-api-v1.onrender.com/jokes")
+        setJokeData(httpResponse.data)
+    }
+
     useEffect(() => {
+        fetchAndStoreJokes()
         console.log("effect ran")
-        axios.get("https://jokes-api-v1.onrender.com/jokes").then(data => console.log(data))
+        
     }, [])
 
     const jokeElements = jokeData.map(joke => {
-        return (<Joke setup={joke.setup} punchline={joke.punchline} />)
+        return (<Joke key={joke.id} setup={joke.setup} punchline={joke.punchline} />)
     })
     return (<main>
         {jokeElements}
