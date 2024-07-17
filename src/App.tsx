@@ -13,6 +13,10 @@ const App = () => {
     setJokeData(httpResponse.data);
   };
 
+  const handleSubmitJoke = () => {}
+
+  const handleJokeInput = () => {}
+
   useEffect(() => {
     fetchAndStoreJokes();
     console.log("effect ran");
@@ -23,6 +27,11 @@ const App = () => {
   });
   return (
     <main>
+        <section className="add-joke">
+        <textarea placeholder="Setup (optional)" name="setup" onChange={handleJokeInput}/>
+        <textarea placeholder="Punchline" name="punchline" onChange={handleJokeInput}/>
+        <button onClick={handleSubmitJoke}>Submit</button>
+        </section>
       <div className="jokes">{jokeElements}</div>
     </main>
   );
