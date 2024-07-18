@@ -8,10 +8,14 @@ interface JokeType {
   punchline: string;
 }
 
+interface JokeTypeWithId extends JokeType {
+  id: number;
+}
+
 const baseURL = "https://jokes-app-db-connection.onrender.com";
 
 const App = () => {
-  const [jokeData, setJokeData] = useState<any[]>([]);
+  const [jokeData, setJokeData] = useState<JokeTypeWithId[]>([]);
   const [newJoke, setNewJoke] = useState<JokeType>({
     setup: "",
     punchline: "",
@@ -56,7 +60,9 @@ const App = () => {
   const jokeElements = jokeData.map((joke) => {
     return <Joke key={joke.id} setup={joke.setup} punchline={joke.punchline} />;
   });
-  return (
+  return jokeData.length === 0 ? (
+    <h1>Getting jokes...</h1>
+  ) : (
     <main>
       <section className="add-joke">
         <textarea
