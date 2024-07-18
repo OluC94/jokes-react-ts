@@ -54,7 +54,6 @@ const App = () => {
 
   useEffect(() => {
     fetchAndStoreJokes();
-    console.log("effect ran");
   }, []);
 
   const jokeElements = jokeData.map((joke) => {
