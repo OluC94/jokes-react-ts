@@ -12,7 +12,8 @@ interface JokeTypeWithId extends JokeType {
   id: number;
 }
 
-const baseURL = "https://jokes-app-db-connection.onrender.com";
+const apiBaseURL = import.meta.env.VITE_API_BASE_URL;
+
 
 const App = () => {
   const [jokeData, setJokeData] = useState<JokeTypeWithId[]>([]);
@@ -22,12 +23,13 @@ const App = () => {
   });
 
   const fetchAndStoreJokes = async (): Promise<void> => {
-    const httpResponse = await axios.get(`${baseURL}/jokes`);
+    const httpResponse = await axios.get(`${apiBaseURL}/jokes`);
     setJokeData(httpResponse.data);
+    console.log(jokeData)
   };
 
   const saveNewJoke = async (jokeData: JokeType): Promise<void> => {
-    const httpResponse = await axios.post(`${baseURL}/jokes`, jokeData);
+    const httpResponse = await axios.post(`${apiBaseURL}/jokes`, jokeData);
     if (httpResponse.data.outcome === "success") {
       alert("Success: please refresh to see your new joke");
       setNewJoke({
@@ -59,6 +61,7 @@ const App = () => {
   const jokeElements = jokeData.map((joke) => {
     return <Joke key={joke.id} setup={joke.setup} punchline={joke.punchline} />;
   });
+
   return jokeData.length === 0 ? (
     <h1>Getting jokes...</h1>
   ) : (
