@@ -16,7 +16,6 @@ const App = () => {
   const fetchAndStoreJokes = async (): Promise<void> => {
     const httpResponse = await axios.get(`${apiBaseURL}/jokes`);
     setJokeData(httpResponse.data);
-    console.log(jokeData);
   };
 
   const saveNewJoke = async (jokeData: JokeView): Promise<void> => {
@@ -56,7 +55,7 @@ const App = () => {
   }, []);
 
   const jokeElements = jokeData.map((joke) => {
-    return <Joke key={joke.id} setup={joke.setup} punchline={joke.punchline} />;
+    return <Joke key={joke.id} jokeData={joke} />;
   });
 
   return jokeData.length === 0 ? (

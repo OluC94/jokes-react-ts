@@ -1,9 +1,11 @@
-const Joke = (props: { setup: string; punchline: string }) => {
-  const { setup, punchline } = props;
+import { JokeViewWithId } from "../types";
+
+const Joke = (props: { jokeData: JokeViewWithId }) => {
+  const { jokeData } = props;
   return (
     <section className="joke">
-      {setup && <h3>Setup: {setup}</h3>}
-      <p>{punchline}</p>
+      {jokeData.setup && <h3>Setup: {jokeData.setup}</h3>}
+      <p>{jokeData.punchline}</p>
       <hr />
     </section>
   );
