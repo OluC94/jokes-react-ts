@@ -2,21 +2,13 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import Joke from "./components/Joke";
 import "./App.css";
-
-interface JokeType {
-  setup: string;
-  punchline: string;
-}
-
-interface JokeTypeWithId extends JokeType {
-  id: number;
-}
+import { JokeView, JokeViewWithId } from "./types";
 
 const apiBaseURL = import.meta.env.VITE_API_BASE_URL;
 
 const App = () => {
-  const [jokeData, setJokeData] = useState<JokeTypeWithId[]>([]);
-  const [newJoke, setNewJoke] = useState<JokeType>({
+  const [jokeData, setJokeData] = useState<JokeViewWithId[]>([]);
+  const [newJoke, setNewJoke] = useState<JokeView>({
     setup: "",
     punchline: "",
   });
@@ -27,21 +19,27 @@ const App = () => {
     console.log(jokeData);
   };
 
-  const saveNewJoke = async (jokeData: JokeType): Promise<void> => {
+  const saveNewJoke = async (jokeData: JokeView): Promise<void> => {
     const httpResponse = await axios.post(`${apiBaseURL}/jokes`, jokeData);
     if (httpResponse.data.outcome === "success") {
       setNewJoke({
         setup: "",
         punchline: "",
       });
-      fetchAndStoreJokes()
+      fetchAndStoreJokes();
     } else {
       alert("Something went wrong");
     }
   };
 
   const handleSubmitJoke = () => {
-    saveNewJoke(newJoke);
+    const emptyInput =
+      newJoke.setup.length === 0 && newJoke.punchline.length === 0;
+    if (emptyInput) {
+      alert("Please at least enter a punchline");
+    } else {
+      saveNewJoke(newJoke);
+    }
   };
 
   const handleJokeInput = (e: { target: { value: string; name: string } }) => {
