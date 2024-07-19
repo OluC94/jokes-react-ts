@@ -30,11 +30,11 @@ const App = () => {
   const saveNewJoke = async (jokeData: JokeType): Promise<void> => {
     const httpResponse = await axios.post(`${apiBaseURL}/jokes`, jokeData);
     if (httpResponse.data.outcome === "success") {
-      alert("Success: please refresh to see your new joke");
       setNewJoke({
         setup: "",
         punchline: "",
       });
+      fetchAndStoreJokes()
     } else {
       alert("Something went wrong");
     }
