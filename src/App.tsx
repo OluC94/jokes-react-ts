@@ -14,7 +14,6 @@ interface JokeTypeWithId extends JokeType {
 
 const apiBaseURL = import.meta.env.VITE_API_BASE_URL;
 
-
 const App = () => {
   const [jokeData, setJokeData] = useState<JokeTypeWithId[]>([]);
   const [newJoke, setNewJoke] = useState<JokeType>({
@@ -25,7 +24,7 @@ const App = () => {
   const fetchAndStoreJokes = async (): Promise<void> => {
     const httpResponse = await axios.get(`${apiBaseURL}/jokes`);
     setJokeData(httpResponse.data);
-    console.log(jokeData)
+    console.log(jokeData);
   };
 
   const saveNewJoke = async (jokeData: JokeType): Promise<void> => {
